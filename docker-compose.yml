@@ -59,7 +59,6 @@ x-sentry-defaults: &sentry_defaults
     SENTRY_EVENT_RETENTION_DAYS:
     SENTRY_MAIL_HOST:
     SENTRY_MAX_EXTERNAL_SOURCEMAP_SIZE:
-    OPENAI_API_KEY:
   volumes:
     - "sentry-data:/data"
     - "./sentry:/etc/sentry"
@@ -109,10 +108,15 @@ services:
       test: redis-cli ping | grep PONG
     volumes:
       - "sentry-redis:/data"
+      - type: bind
+        read_only: true
+        source: ./redis.conf
+        target: /usr/local/etc/redis/redis.conf
     ulimits:
       nofile:
         soft: 10032
         hard: 10032
+    command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
   postgres:
     <<: *restart_policy
     # Using the same postgres version as Sentry dev for consistency purposes
@@ -202,15 +206,6 @@ services:
       interval: 10s
       timeout: 10s
       retries: 30
-  geoipupdate:
-    image: "ghcr.io/maxmind/geoipupdate:v6.1.0"
-    # Override the entrypoint in order to avoid using envvars for config.
-    # Futz with settings so we can keep mmdb and conf in same dir on host
-    # (image looks for them in separate dirs by default).
-    entrypoint:
-      ["/usr/bin/geoipupdate", "-d", "/sentry", "-f", "/sentry/GeoIP.conf"]
-    volumes:
-      - "./geoip:/sentry"
   snuba-api:
     <<: *snuba_defaults
   # Kafka consumer responsible for feeding events into Clickhouse

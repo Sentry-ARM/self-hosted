@@ -72,6 +72,18 @@ SENTRY_OPTIONS["system.event-retention-days"] = int(
     env("SENTRY_EVENT_RETENTION_DAYS", "90")
 )
 
+# Self-hosted Sentry infamously has a lot of Docker containers required to make
+# all the features work. Oftentimes, users don't use the full feature set that
+# requires all the containers. This is a way to enable only the error monitoring
+# feature which also reduces the amount of containers required to run Sentry.
+#
+# To make Sentry work with all features, set `COMPOSE_PROFILES` to `feature-complete`
+# in your `.env` file. To enable only the error monitoring feature, set
+# `COMPOSE_PROFILES` to `errors-only`.
+#
+# See https://develop.sentry.dev/self-hosted/experimental/errors-only/
+SENTRY_SELF_HOSTED_ERRORS_ONLY = env("COMPOSE_PROFILES") != "feature-complete"
+
 #########
 # Redis #
 #########
@@ -336,20 +348,6 @@ GEOIP_PATH_MMDB = "/geoip/GeoLite2-City.mmdb"
 # BITBUCKET_CONSUMER_SECRET = 'YOUR_BITBUCKET_CONSUMER_SECRET'
 
 ##############################################
-# Suggested Fix Feature / OpenAI Integration #
-##############################################
-
-# See https://docs.sentry.io/product/issues/issue-details/ai-suggested-solution/
-# for more information about the feature. Make sure the OpenAI's privacy policy is
-# aligned with your company.
-
-# Set the OPENAI_API_KEY on the .env or .env.custom file with a valid
-# OpenAI API key to turn on the feature.
-OPENAI_API_KEY = env("OPENAI_API_KEY", "")
-
-SENTRY_FEATURES["organizations:open-ai-suggestion"] = bool(OPENAI_API_KEY)
-
-##############################################
 # Content Security Policy settings
 ##############################################
 
@@ -386,10 +384,6 @@ CSP_REPORT_ONLY = True
 # your `.env` or `.env.custom` file. The files should only be a few KBs, and this might be useful
 # if you're using it directly like a CDN instead of using the loader script.
 JS_SDK_LOADER_DEFAULT_SDK_URL = "https://browser.sentry-cdn.com/%s/bundle%s.min.js"
-
-
-# If you would like to use self-hosted Sentry with only errors enabled, please set this
-SENTRY_SELF_HOSTED_ERRORS_ONLY = env("COMPOSE_PROFILES") != "feature-complete"
 
 #####################
 # Insights Settings #

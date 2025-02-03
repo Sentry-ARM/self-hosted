@@ -1,5 +1,54 @@
 # Changelog
 
+## 25.1.0
+
+### Various fixes & improvements
+
+- ci: Use generic Docker volume cache action (#3524) by @BYK
+- ci: Less volatile cache keys (#3522) by @BYK
+- docs: include regular env file on wrap-up (#3523) by @aldy505
+- ci: Faster and smarter backup/restore tests (#3516) by @BYK
+- fix: Fix the new e2e action to be portable (#3520) by @BYK
+- ci: Move e2e test action into the repo (#3519) by @BYK
+- ci: Only test on compose 2.26 w/ customizations (#3506) by @BYK
+- ci: Skip DB ops during install completely on cache hit (#3496) by @BYK
+- chore: Remove everything zookeeper (#3499) by @hubertdeng123
+- ci: Cache postgres volume after first migration (#3488) by @BYK
+- fix: Remove the extra space in the log file names (#3212) by @melnele
+- ref(snuba): Combine bootstrap & migrate for faster bootstrap (#3491) by @BYK
+- ref(geoip): Remove geoipupdate from compose (#3490) by @BYK
+- build(deps): bump actions/create-github-app-token from 1.11.0 to 1.11.1 (#3492) by @dependabot
+
+## 24.12.1
+
+### Various fixes & improvements
+
+- chore: clearer message for errors-only mode (#3487) by @aldy505
+- chore(relay): provide opt-in max_memory_percent config as workaround for failing healthcheck (#3486) by @aldy505
+- fix(nginx): _assets should rewrite to _static/sentry/dist (#3483) by @BYK
+
+## 24.12.0
+
+- No documented changes.
+
+## 24.11.2
+
+### Various fixes & improvements
+
+- fix(redis): Actually use custom config (#3459) by @BYK
+- feat(release): Replace release bot with GH app (#3458) by @Jeffreyhung
+- chore(issue-template): ask for machine specification and provide link to security policy (#3447) by @aldy505
+- add sentry/backup.json to gitignore (#3450) by @niklassc7
+- ref: remove suggested fix (#3446) by @aldy505
+
+## 24.11.1
+
+### Various fixes & improvements
+
+- fix(redis): Use a safer eviction rule (#3432) by @BYK
+- feat: add Redis configuration for improved memory management (#3427) by @Hassanzadeh-sd
+- build(deps): bump codecov/codecov-action from 4 to 5 (#3429) by @dependabot
+
 ## 24.11.0
 
 ### Various fixes & improvements

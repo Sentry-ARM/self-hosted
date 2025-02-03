@@ -80,6 +80,14 @@ def test_initial_redirect():
     assert initial_auth_redirect.url == f"{SENTRY_TEST_HOST}/auth/login/sentry/"
 
 
+def test_asset_internal_rewrite():
+    """Tests whether we correctly map `/_assets/*` to `/_static/dist/sentry` as
+    we don't have a CDN setup in self-hosted."""
+    response = httpx.get(f"{SENTRY_TEST_HOST}/_assets/entrypoints/app.js")
+    assert response.status_code == 200
+    assert response.headers["Content-Type"] == "text/javascript"
+
+
 def test_login(client_login):
     client, login_response = client_login
     parser = BeautifulSoup(login_response.text, "html.parser")
@@ -318,7 +326,15 @@ def test_custom_certificate_authorities():
         )
 
     subprocess.run(
-        ["docker", "compose", "--ansi", "never", "up", "-d", "fixture-custom-ca-roots"],
+        [
+            "docker",
+            "compose",
+            "--ansi",
+            "never",
+            "up",
+            "--wait",
+            "fixture-custom-ca-roots",
+        ],
         check=True,
     )
     subprocess.run(
@@ -440,7 +456,4 @@ def test_customizations():
     ]
     for command in commands:
         result = subprocess.run(command, check=False)
-        if os.getenv("TEST_CUSTOMIZATIONS", "disabled") == "enabled":
-            assert result.returncode == 0
-        else:
-            assert result.returncode != 0
+        assert result.returncode == 0
