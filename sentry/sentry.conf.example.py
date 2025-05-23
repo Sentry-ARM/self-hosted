@@ -53,10 +53,6 @@ DATABASES = {
     }
 }
 
-# You should not change this setting after your database has been created
-# unless you have altered all schemas first
-SENTRY_USE_BIG_INTS = True
-
 # If you're expecting any kind of real traffic on Sentry, we highly recommend
 # configuring the CACHES and Redis settings
 
@@ -200,15 +196,6 @@ SENTRY_TAGSTORE_OPTIONS = {}
 
 SENTRY_DIGESTS = "sentry.digests.backends.redis.RedisBackend"
 
-###################
-# Metrics Backend #
-###################
-
-SENTRY_RELEASE_HEALTH = "sentry.release_health.metrics.MetricsReleaseHealthBackend"
-SENTRY_RELEASE_MONITOR = (
-    "sentry.release_health.release_monitor.metrics.MetricReleaseMonitorBackend"
-)
-
 ##############
 # Web Server #
 ##############
@@ -277,13 +264,11 @@ SENTRY_FEATURES.update(
         feature: True
         for feature in (
             "organizations:discover",
-            "organizations:events",
             "organizations:global-views",
             "organizations:incidents",
             "organizations:integrations-issue-basic",
             "organizations:integrations-issue-sync",
             "organizations:invite-members",
-            "organizations:metric-alert-builder-aggregate",
             "organizations:sso-basic",
             "organizations:sso-rippling",
             "organizations:sso-saml2",
@@ -299,6 +284,7 @@ SENTRY_FEATURES.update(
             "organizations:metrics-extraction",
             "organizations:transaction-metrics-extraction",
             "organizations:trace-view-v1",
+            "organizations:dynamic-sampling",
             "projects:custom-inbound-filters",
             "projects:data-forwarding",
             "projects:discard-groups",

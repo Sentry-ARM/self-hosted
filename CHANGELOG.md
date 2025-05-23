@@ -1,5 +1,38 @@
 # Changelog
 
+## 25.5.1
+
+### Various fixes & improvements
+
+- Add missing lib script to sentry-admin.sh (#3693) by @djakielski
+- chore: cleanup obsolete feature flags (#3701) by @doc-sheet
+
+## 25.5.0
+
+### Various fixes & improvements
+
+- build(deps): bump actions/create-github-app-token from 2.0.2 to 2.0.6 (#3690) by @dependabot
+- Resolve datetime deprecation warnings (#3686) by @emmanuel-ferdman
+- ref: remove SENTRY_USE_BIG_INTS (always True) (#3687) by @asottile-sentry
+
+## 25.4.0
+
+### Stand-alone Docker Compose Fixes
+
+By: @aminvakil (#3658, #3654)
+
+### Various fixes & improvements
+
+- chore(relay): specify spool.enveloppe.max_backpressure_memory_percent configuration for handling relay's failing healthcheck (#3635) by @aldy505
+- build(deps): bump actions/create-github-app-token from 1.12.0 to 2.0.2 (#3649) by @dependabot
+- build(deps): bump actions/create-github-app-token from 1.11.7 to 1.12.0 (#3639) by @dependabot
+- Minimum requirements for 'errors-only' profile (#3634) by @madest92
+- build(deps): bump actions/create-github-app-token from 1.11.6 to 1.11.7 (#3632) by @dependabot
+- feat(sentry): add dynamic sampling feature to config (#3631) by @aldy505
+- docs(config): add example config for Google Auth (#3623) by @junsung-cho
+- fix: js-sdk directory/file permission should be set correctly (#3616) by @aldy505
+- feat(features): enable session replay canvas (#3619) by @aldy505
+
 ## 25.3.0
 
 ### Various fixes & improvements
